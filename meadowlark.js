@@ -1,10 +1,24 @@
-const http = require('http')
-const path = require('path')
-const fs = require('fs')
+const express = require('express')
+const expressHandlebars = require('express-handlebars')
 const port = 3000
+const app = express()
 
-let server = http.createServer((req, res) => {
-   res.end('Hello from nodejs!')
+app.engine('hbs', expressHandlebars.engine({
+   defaultLayout: 'main',
+   extname: 'hbs'
+}))
+app.set('view engine', 'hbs')
+
+app.get('/', ((req, res) => {
+   res.render('home')
+}))
+app.get('/about', (req, res) => {
+   res.render('about')
 })
 
-server.listen(port, () => console.log('Sever is starting'))
+app.use((req, res) => {
+   res.status(404)
+   res.render('404')
+})
+
+app.listen(port, () => console.log('Express is starting...'))
