@@ -9,6 +9,8 @@ app.engine('hbs', expressHandlebars.engine({
 }))
 app.set('view engine', 'hbs')
 
+app.use(express.static(__dirname + '/public'))
+
 app.get('/', ((req, res) => {
    res.render('home')
 }))
@@ -20,5 +22,7 @@ app.use((req, res) => {
    res.status(404)
    res.render('404')
 })
+
+
 
 app.listen(port, () => console.log('Express is starting...'))
